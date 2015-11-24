@@ -1,23 +1,50 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 	<head>
-		<title>Blackjack Game</title>
-  <link rel="stylesheet" href="stylesheet.css" type="text/css">
+		   <meta charset="utf-8">
+		    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		    <meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
 
-	<script type="text/javaScript">
+		<title>Blackjack Game</title>
+
+<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="starter-template.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+		<script type="text/javaScript">
+		
+
 		var gameOver; var cardCount;
-			function Shuffle(max){
+	
+	function Shuffle(max){
 		var num=Math.random()*max;
-			return Math.round(num)+1;
-	}
+		return Math.round(num)+1;
+		}
 
 	function getSuit(){
 		suit = Shuffle(4);
-			if(suit == 1) return "Spades";
-			if(suit == 2) return "Clubs";
-			if(suit == 3) return "Diamonds";
-			else return "Hearts";
-			}
+		if(suit == 1) return "Spades";
+		if(suit == 2) return "Clubs";
+		if(suit == 3) return "Diamonds";
+		else return "Hearts";
+	}
 
 	function cardName(card){
 		if(card == 1) return "Ace";
@@ -29,120 +56,192 @@
 
 	function cardValue(card,strWho){
 		if(card == 1) {
-			if(strWho =="You" && document.display.you.value >10){
-			document.display.say2.value=document.display.say2.value+" Low"; return 1;}
-			else return 11; }
+		
+		if(strWho =="You" && document.display.you.value >10){
+			document.display.say2.value=document.display.say2.value+" Low"; return 1;
+		}
+		
+		else return 11; 
+		}
+		
 		 if(card > 10) return 10; 
+		
 		return card;
-	}
+		}
 
 	function PickACard(strWho){
 		card = Shuffle(12);
 		suit = getSuit();
-			if(strWho =="You")
-				document.display.say2.value=(cardName(card) + " of " + suit);
-			else
-				document.display.say1.value=(cardName(card) + " of " + suit);
-			return cardValue(card,strWho);
-	}
-
-	function NewHand(form){
-		if(gameOver !=0)
-			{form.say1.value=("Hand in Play!"); form.say2.value=(""); return;}
+		
+		if(strWho =="You")
+			document.display.say2.value=(cardName(card) + " of " + suit);
+		
 		else
-			{form.dealer.value = 0; form.you.value = 0; cardCount=0;
+			document.display.say1.value=(cardName(card) + " of " + suit);
+		
+		return cardValue(card,strWho);
+	}
+	
+	function NewHand(form){
+		if(gameOver !=0){
+				form.say1.value=("Hand in Play!"); form.say2.value=(""); return;
+		}
+		else{
+			form.dealer.value = 0; form.you.value = 0; cardCount=0;
 			form.dealer.value = eval(form.dealer.value) + PickACard("Dealer");
 			form.you.value = eval(form.you.value) + PickACard("You");
-			gameOver= -1; cardCount+=1;}
+			gameOver= -1; cardCount+=1;
+		}
 	}
 
 	function Dealer(form){
-		
 		if (gameOver ==0){
-			form.say1.value=("Deal the Cards!"); form.say2.value=(""); return;}
+			form.say1.value=("Deal the Cards!"); form.say2.value=(""); return;
+		}
 		
-		else if(form.you.value<10){ 
-			form.say1.value=("Not Below Ten!"); form.say2.value=("Press Hit!"); return;}
+		else if(form.you.value<10){
+			form.say1.value=("Not Below Ten!"); form.say2.value=("Take a Hit!"); return;
+		}
 		
 		else if (cardCount <2){
-			form.say1.value=("Minimum 2 Cards!"); form.say2.value=("Hit Again!"); return;}
+				form.say1.value=("Minimum 2 Cards!"); form.say2.value=("Hit Again!"); return;
+	}
 		
 		else while(form.dealer.value < 17){
-			form.dealer.value = eval(form.dealer.value) + PickACard("Dealer");}
-	}
+			form.dealer.value = eval(form.dealer.value) + PickACard("Dealer");
+		}
+		}
 
 	function User(form){
-		
 		if (gameOver ==0){
-			form.say1.value=("Deal the Cards!"); form.say2.value=(""); return;}
+				form.say1.value=("Deal the Cards!"); form.say2.value=(""); return;
+			}
 		
 		else {
 			cardCount+=1; form.say1.value=("You Get...");
-			form.you.value = eval(form.you.value) + PickACard("You");}
-		
+			form.you.value = eval(form.you.value) + PickACard("You");
+		}
 		if(form.you.value > 21){
 			form.say1.value=("You Busted!");
-			gameOver=0; form.numgames.value=eval(form.numgames.value)-1;}
+			gameOver=0; form.numgames.value=eval(form.numgames.value)-1;
+		}
 	}
 
 	function LookAtHands(form){
-		if (gameOver ==0 || form.you.value<10 || cardCount <2){return;}
+		if (gameOver ==0 || form.you.value<10 || cardCount <2){return;
+		}
 		
 		else if(form.dealer.value > 21){
-			form.say1.value=("House Busts!"); form.say2.value=("You Win! $$$$$$");
-		gameOver=0; form.numgames.value=eval(form.numgames.value)+1;}
+		form.say1.value=("House Busts!"); form.say2.value=("You Win!");
+		gameOver=0; form.numgames.value=eval(form.numgames.value)+1;
+		}
+		
+		 else if(form.you.value > form.dealer.value)
+		{form.say1.value=("You Win!"); form.say2.value=("$$$$$$$$");
+		gameOver=0; form.numgames.value=eval(form.numgames.value)+1;
+		}
 		 
-		 else if(form.you.value > form.dealer.value){
-		 	form.say1.value=("You Win!"); form.say2.value=("$$$$$$$$$$$$$$$");
-		gameOver=0; form.numgames.value=eval(form.numgames.value)+1;}
+		 else if(form.dealer.value == form.you.value)
+		{form.say1.value=("Game Tied!"); form.say2.value=("Deal Again!");
+		gameOver=0; form.numgames.value=eval(form.numgames.value)-1;
+		}
 		 
-		 else if(form.dealer.value == form.you.value){
-		 	form.say1.value=("Game Tied!"); form.say2.value=("Deal Again!");
-		gameOver=0; form.numgames.value=eval(form.numgames.value)-1;}
-		 
-		 else{
-		 	form.say1.value=("House Wins!"); form.say2.value=("Tough Luck!");
-		gameOver=0; form.numgames.value=eval(form.numgames.value)-1;}
+		 else
+		{form.say1.value=("House Wins!"); form.say2.value=("Sucker!");
+		gameOver=0; form.numgames.value=eval(form.numgames.value)-1;
+		}
 	}
 
-	function setBj(){
-	gameOver=0; cardCount=0; 
-	document.display.dealer.value=""; 
-	document.display.you.value="";
-	document.display.numgames.value="0";
-	document.display.say1.value="   Press 'Deal'";
-	document.display.say2.value="   To Start!";
-	}
+
+function setBj(){
+gameOver=0; cardCount=0; 
+document.display.dealer.value=""; 
+document.display.you.value="";
+document.display.numgames.value="0";
+document.display.say1.value="   Hit 'Deal'";
+document.display.say2.value="   To Start!";
+}
+
 
 </script>
 </head>
+       
+    </nav>
+	
+		<div class="row">
+			<div class="col-md-4 centered starter-template">
+				
+			</div>
+	
+		    <div class="col-md-4 centered starter-template">
+	    		<h1><mark>Blackjack</mark></h1>
+	      	</div>
+      
+	      	<div class="col-md-4">
+	      		<li class="active"><a href="https://generalassemb.ly/seattle">Home</a></li>
+	            <li><a href="https://www.bovada.lv/">Winners</a></li>
+	        </div>
 
-<BODY OnLoad="setBj()">
-	<p></p>
+    </div><!-- /.container -->
 
-	<center>
+<center>
+<button onclick="myFunction()">Click to play</button>
+</center>
+<script>
+function myFunction() {
+    alert("CREDIT CARD ACCEPTED! Please enjoy!");
+}
+</script>
+
+
+<body background="http://www.wallpaperup.com/uploads/wallpapers/2014/05/20/355075/f37a756008e9c1f0c681b571762a1ff2.jpg">
+
+
+
+<body OnLoad="setBj()">
+    <div class="auto-style1">
+
+	  <center>
 		<form name="display">
-			<table bgcolor="#ddd" border="2" cellspacing="1" cellpadding="4">
+		
+			<table bgcolor="green" border="15" cellspacing="50" cellpadding="5">
 	<tr>
-		<td><center>Score:</center></td>
-			<td><center>Player 1</center></td>
+			<td><center>Dealer</center></td>
 				<td><center><input type=text name="dealer" size="2"></center></td>
 					<td><center>Card(s):  <input type=text name="say1" size="18" value=""></center></td>
 	</tr>
 	<tr>
-		<td><center><input type=text name="numgames" size="3" value="0"></center></td>
-			<td><center>Player 2</center></td>
-				<td><center><input type=text name="you" size="2"></center></td>
-					<td><center>Card(s):  <input type=text name="say2" size="18" value=""></center></td>
+		<td><center>Player</center></td>
+		
+		<td><center><input type=text name="you" size="2"></center></td>
+		
+		<td><center>Card(s):  <input type=text name="say2" size="18" value=""></center></td>
 	</tr>
 	<tr>
-	<td><center><input type=button value="Deal" onClick="NewHand(this.form)"></center></td>
-			<td colspan=3><center>
-<input type=button value="Stay" onClick="Dealer(this.form);LookAtHands(this.form);">
-<input type=button value=" Hit " onClick="User(this.form)"></center></td></tr>
-</table>
-</form>
-</center>
+		<td colspan=3><center>
+	
+		<input type=button style="background-color:lightgreen" value="Deal" onClick="NewHand(this.form)">
+	
+		<input type=button style="background-color:red" value="Stay"  onClick="Dealer(this.form);LookAtHands(this.form);">
+	
+		<input type=button style="background-color:yellow" value=" Hit " onClick="User(this.form)"></center></tr>
+	
+		<td colspan= 3><center>Wins <input type=text name="numgames" size="3" value="0"></center></td>
+	</tr>
+			</table>
+		</form>
+	  </center>
+	</div>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+
+
 
 </body>
 </html> 
