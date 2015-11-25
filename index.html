@@ -1,37 +1,31 @@
 <!DOCTYPE HTML>
 <html lang="en">
+	
 	<head>
-		   <meta charset="utf-8">
+		  	<meta charset="utf-8">
 		    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		    <meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		    <meta name="description" content="">
-    <meta name="author" content="">
+    		<meta name="author" content="">
+    
     <link rel="icon" href="../../favicon.ico">
 
 		<title>Blackjack Game</title>
 
-<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
     <link href="starter-template.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-		<script type="text/javaScript">
+	<script type="text/javaScript">
 		
 
-		var gameOver; var cardCount;
+		var gameOver; 
+		var cardCount;
 	
 	function Shuffle(max){
 		var num=Math.random()*max;
@@ -64,7 +58,7 @@
 		else return 11; 
 		}
 		
-		 if(card > 10) return 10; 
+		if(card > 10) return 10; 
 		
 		return card;
 		}
@@ -84,10 +78,13 @@
 	
 	function NewHand(form){
 		if(gameOver !=0){
-				form.say1.value=("Hand in Play!"); form.say2.value=(""); return;
+				form.say1.value=("Hand in Play!"); 
+				form.say2.value=(""); return;
 		}
 		else{
-			form.dealer.value = 0; form.you.value = 0; cardCount=0;
+			form.dealer.value = 0; 
+			form.you.value = 0; 
+			cardCount=0;
 			form.dealer.value = eval(form.dealer.value) + PickACard("Dealer");
 			form.you.value = eval(form.you.value) + PickACard("You");
 			gameOver= -1; cardCount+=1;
@@ -96,15 +93,21 @@
 
 	function Dealer(form){
 		if (gameOver ==0){
-			form.say1.value=("Deal the Cards!"); form.say2.value=(""); return;
+			form.say1.value=("Deal the Cards!"); 
+			form.say2.value=(""); 
+			return;
 		}
 		
 		else if(form.you.value<10){
-			form.say1.value=("Not Below Ten!"); form.say2.value=("Take a Hit!"); return;
+			form.say1.value=("Not Below Ten!"); 
+			form.say2.value=("Take a Hit!"); 
+			return;
 		}
 		
 		else if (cardCount <2){
-				form.say1.value=("Minimum 2 Cards!"); form.say2.value=("Hit Again!"); return;
+				form.say1.value=("Minimum 2 Cards!"); 
+				form.say2.value=("Hit Again!"); 
+				return;
 	}
 		
 		else while(form.dealer.value < 17){
@@ -114,41 +117,54 @@
 
 	function User(form){
 		if (gameOver ==0){
-				form.say1.value=("Deal the Cards!"); form.say2.value=(""); return;
+				form.say1.value=("Deal the Cards!"); 
+				form.say2.value=(""); 
+				return;
 			}
 		
 		else {
-			cardCount+=1; form.say1.value=("You Get...");
+			cardCount+=1; 
+			form.say1.value=("You Get...");
 			form.you.value = eval(form.you.value) + PickACard("You");
 		}
 		if(form.you.value > 21){
 			form.say1.value=("You Busted!");
-			gameOver=0; form.numgames.value=eval(form.numgames.value)-1;
+			gameOver=0; 
+			form.numgames.value=eval(form.numgames.value)-1;
 		}
 	}
 
 	function LookAtHands(form){
-		if (gameOver ==0 || form.you.value<10 || cardCount <2){return;
+		if (gameOver ==0 || form.you.value<10 || cardCount <2){
+			return;
 		}
 		
 		else if(form.dealer.value > 21){
-		form.say1.value=("House Busts!"); form.say2.value=("You Win!");
-		gameOver=0; form.numgames.value=eval(form.numgames.value)+1;
+		form.say1.value=("House Busts!"); 
+		form.say2.value=("You Win!");
+		gameOver=0; 
+		form.numgames.value=eval(form.numgames.value)+1;
 		}
 		
 		 else if(form.you.value > form.dealer.value)
-		{form.say1.value=("You Win!"); form.say2.value=("$$$$$$$$");
-		gameOver=0; form.numgames.value=eval(form.numgames.value)+1;
+		{form.say1.value=("You Win!"); 
+		form.say2.value=("$$$$$$$$");
+		gameOver=0; 
+		form.numgames.value=eval(form.numgames.value)+1;
 		}
 		 
 		 else if(form.dealer.value == form.you.value)
-		{form.say1.value=("Game Tied!"); form.say2.value=("Deal Again!");
-		gameOver=0; form.numgames.value=eval(form.numgames.value)-1;
+		{form.say1.value=("Game Tied!"); 
+		form.say2.value=("Deal Again!");
+		gameOver=0; 
+		form.numgames.value=eval(form.numgames.value)-1;
 		}
 		 
 		 else
-		{form.say1.value=("House Wins!"); form.say2.value=("Sucker!");
-		gameOver=0; form.numgames.value=eval(form.numgames.value)-1;
+		{form.say1.value=("House Wins!"); 
+		form.say2.value=("Sucker!");
+		gameOver=0; 
+		form.numgames.value=eval(form.numgames.value)-1;
 		}
 	}
 
@@ -197,7 +213,6 @@ function myFunction() {
 <body background="http://www.wallpaperup.com/uploads/wallpapers/2014/05/20/355075/f37a756008e9c1f0c681b571762a1ff2.jpg">
 
 
-
 <body OnLoad="setBj()">
     <div class="auto-style1">
 
@@ -205,7 +220,7 @@ function myFunction() {
 		<form name="display">
 		
 			<table bgcolor="green" border="15" cellspacing="50" cellpadding="5">
-	<tr>
+		<tr>
 			<td><center>Dealer</center></td>
 				<td><center><input type=text name="dealer" size="2"></center></td>
 					<td><center>Card(s):  <input type=text name="say1" size="18" value=""></center></td>
